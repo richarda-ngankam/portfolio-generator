@@ -7,6 +7,7 @@ import { THEMES, createPortfolio, uid } from '../lib/portfolio'
 import { completion, hasContent } from '../lib/portfolioStats'
 import { stashDraft } from '../lib/pendingDraft'
 import ContentPanel from '../components/editor/ContentPanel'
+import StylePanel from '../components/editor/StylePanel'
 import Preview from '../components/editor/Preview'
 import ExitDialog from '../components/ExitDialog'
 
@@ -259,7 +260,7 @@ export default function Editor() {
           </div>
 
           {tab === 'content' && <ContentPanel draft={draft} editor={editor} />}
-          {tab === 'style' && <p className="section-description">Thème, couleurs et forme de la photo : étape 3.6.</p>}
+          {tab === 'style' && <StylePanel draft={draft} editor={editor} />}
           {tab === 'publish' && <p className="section-description">Publication : Bloc 5.</p>}
         </aside>
 

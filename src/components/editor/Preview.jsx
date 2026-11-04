@@ -48,10 +48,12 @@ export default function Preview({ draft }) {
       </div>
 
       <div className="preview-zoom-wrap" ref={wrapRef}>
-        <div className="preview-stage">
+        {/* margin auto : centré, et jamais coupé à gauche quand on zoome */}
+        <div className="preview-stage" style={{ margin: '0 auto' }}>
           <div
             className={`preview-frame ${device}`}
-            style={{ zoom: zoom / 100 }}
+            // Largeur fixe par appareil : sans elle le cadre se rétrécit
+            style={{ zoom: zoom / 100, width: BASE_WIDTH[device], maxWidth: 'none' }}
             // Les liens de l'aperçu ne doivent pas faire quitter l'éditeur
             onClick={(e) => {
               if (e.target.closest('a')) e.preventDefault()
