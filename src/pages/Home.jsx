@@ -33,13 +33,12 @@ export default function Home() {
         </div>
         <div className="hero-art">
           <div className="art-paper">
-            <div className="eyebrow">Votre portfolio</div>
-            <div className="art-photo" />
-            <h2>Votre<br />nom.</h2>
-            <p style={{ fontSize: 10, color: '#777' }}>Votre métier ou votre spécialité</p>
-            <div className="art-line" />
-            <div className="art-line" style={{ width: '55%' }} />
-            <div style={{ marginTop: 20, fontSize: 9, letterSpacing: 2 }}>VOS RÉALISATIONS — 2026</div>
+            <div className="art-avatar" />
+            <div className="art-bar title" />
+            <div className="art-bar" style={{ width: '40%' }} />
+            <div className="art-line" style={{ marginTop: 26 }} />
+            <div className="art-line" style={{ width: '60%' }} />
+            <div className="art-line" style={{ width: '45%' }} />
           </div>
         </div>
       </section>
