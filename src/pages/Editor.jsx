@@ -6,6 +6,7 @@ import { useEditorState } from '../hooks/useEditorState'
 import { THEMES, createPortfolio } from '../lib/portfolio'
 import { completion, hasContent } from '../lib/portfolioStats'
 import ContentPanel from '../components/editor/ContentPanel'
+import Preview from '../components/editor/Preview'
 
 const TABS = [
   { id: 'content', label: 'Contenu' },
@@ -148,22 +149,7 @@ export default function Editor() {
           {tab === 'publish' && <p className="section-description">Publication : Bloc 5.</p>}
         </aside>
 
-        <section className="editor-main">
-          <div className="preview-toolbar">
-            <strong>Aperçu en direct</strong>
-          </div>
-          <div className="preview-stage">
-            <div className="preview-frame" style={{ padding: 40 }}>
-              <h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: 36, margin: 0 }}>
-                {draft.name || 'Votre nom'}
-              </h2>
-              <p className="muted">{draft.profession || 'Votre métier'}</p>
-              <p className="small muted" style={{ marginTop: 40 }}>
-                Aperçu provisoire : le rendu du thème « {theme?.name} » arrive à l'étape 3.4.
-              </p>
-            </div>
-          </div>
-        </section>
+        <Preview draft={draft} />
       </div>
     </div>
   )
