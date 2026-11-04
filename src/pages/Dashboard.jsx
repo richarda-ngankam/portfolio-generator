@@ -1,8 +1,9 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { DB } from '../db'
 import { useAuth } from '../context/AuthContext'
 import { THEMES, uid, slugify, formatDate } from '../lib/portfolio'
+import { readPending, clearPending } from '../lib/pendingDraft'
 import MiniPreview from '../components/MiniPreview'
 import ConfirmDialog from '../components/ConfirmDialog'
 import ThemePicker from '../components/ThemePicker'
@@ -23,6 +24,7 @@ export default function Dashboard() {
   const [search, setSearch] = useState('')
   const [confirm, setConfirm] = useState(null)
   const [picking, setPicking] = useState(false)
+  const resumed = useRef(false)
 
   const load = useCallback(async () => {
     try {
@@ -38,6 +40,26 @@ export default function Dashboard() {
   useEffect(() => {
     load()
   }, [load])
+
+  // Reprise : un visiteur a cliqué « Oui » à « Enregistrer ? » sans être connecté.
+  // Après sa connexion, on enregistre le brouillon qu'on a gardé pour lui.
+  useEffect(() => {
+    if (resumed.current) return
+    resumed.current = true
+    const pending = readPending()
+    if (!pending) return
+
+    DB.savePortfolio({ ...pending.draft, statut: 'enregistré' })
+      .then(() => {
+        clearPending()
+        if (pending.after && pending.after !== '/dashboard') {
+          navigate(pending.after, { replace: true })
+        } else {
+          load()
+        }
+      })
+      .catch((e) => setError(e.message || "L'enregistrement du portfolio en attente a échoué."))
+  }, [load, navigate])
 
   // Exécute une action puis recharge la liste
   async function run(action) {
