@@ -5,6 +5,7 @@ import { useAuth } from '../context/AuthContext'
 import { THEMES, uid, slugify, formatDate } from '../lib/portfolio'
 import MiniPreview from '../components/MiniPreview'
 import ConfirmDialog from '../components/ConfirmDialog'
+import ThemePicker from '../components/ThemePicker'
 
 const TABS = [
   { id: 'ongoing', label: 'En cours', statuts: ['brouillon', 'enregistré'] },
@@ -21,6 +22,7 @@ export default function Dashboard() {
   const [tab, setTab] = useState('ongoing')
   const [search, setSearch] = useState('')
   const [confirm, setConfirm] = useState(null)
+  const [picking, setPicking] = useState(false)
 
   const load = useCallback(async () => {
     try {
@@ -98,10 +100,11 @@ export default function Dashboard() {
     })
 
   const current = TABS.find((t) => t.id === tab)
+  const query = search.trim().toLowerCase()
   const visible = items.filter(
     (p) =>
       current.statuts.includes(p.statut) &&
-      `${p.titre} ${p.name} ${p.profession}`.toLowerCase().includes(search.toLowerCase())
+      [p.titre, p.name, p.profession].filter(Boolean).join(' ').toLowerCase().includes(query)
   )
 
   return (
@@ -113,7 +116,9 @@ export default function Dashboard() {
             Bonjour {user.displayName || user.email}. Retrouvez et gérez vos créations.
           </p>
         </div>
-        <button className="btn btn-primary" onClick={() => navigate('/')}>＋ Créer un portfolio</button>
+        <button className="btn btn-primary" onClick={() => setPicking(true)}>
+          ＋ Créer un portfolio
+        </button>
       </div>
 
       <div className="tabs">
@@ -175,12 +180,30 @@ export default function Dashboard() {
             )
           })}
         </div>
-      ) : (
+      ) : query ? (
+        <div className="empty">
+          <div className="empty-icon">▧</div>
+          <h3>Aucun résultat</h3>
+          <p>Aucun portfolio ne correspond à « {search} ».</p>
+        </div>
+      ) : tab === 'ongoing' ? (
         <div className="empty">
           <div className="empty-icon">▧</div>
           <h3>Aucun portfolio pour le moment</h3>
           <p>Choisissez un modèle pour commencer votre premier portfolio.</p>
-          <button className="btn btn-primary" onClick={() => navigate('/')}>Créer un portfolio</button>
+          <button className="btn btn-primary" onClick={() => setPicking(true)}>
+            Créer un portfolio
+          </button>
+        </div>
+      ) : (
+        <div className="empty">
+          <div className="empty-icon">▧</div>
+          <h3>{tab === 'archives' ? 'Aucune archive' : 'La corbeille est vide'}</h3>
+          <p>
+            {tab === 'archives'
+              ? 'Les portfolios que vous archivez apparaissent ici.'
+              : 'Les portfolios supprimés apparaissent ici avant leur suppression définitive.'}
+          </p>
         </div>
       )}
 
@@ -201,6 +224,8 @@ export default function Dashboard() {
           </button>
         </div>
       </div>
+
+      {picking && <ThemePicker onClose={() => setPicking(false)} />}
 
       {confirm && (
         <ConfirmDialog
