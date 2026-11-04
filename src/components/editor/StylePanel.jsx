@@ -1,4 +1,5 @@
 import { THEMES } from '../../lib/portfolio'
+import { effectiveColors } from '../../render/colors'
 
 const ACCENTS = ['#6478df', '#e45f4d', '#208c75', '#d9a52c', '#a45fc2', '#252b38', '#df6d96']
 const BACKGROUNDS = ['#ffffff', '#f4f1eb', '#eef1f5', '#f8f0e9', '#17191c']
@@ -7,10 +8,15 @@ const SHAPES = [
   ['square', 'Carré'],
   ['rounded', 'Arrondi'],
 ]
-const DEFAULT_ACCENT = '#6478df'
-const DEFAULT_BACKGROUND = '#ffffff'
 
-const title = { fontSize: 12, fontWeight: 700, letterSpacing: '.08em', textTransform: 'uppercase', color: 'var(--muted, #777)', margin: '22px 0 10px' }
+const title = {
+  fontSize: 12,
+  fontWeight: 700,
+  letterSpacing: '.08em',
+  textTransform: 'uppercase',
+  color: 'var(--muted, #777)',
+  margin: '22px 0 10px',
+}
 
 function Swatches({ colors, value, label, onPick }) {
   return (
@@ -59,15 +65,13 @@ function ColorRow({ id, label, value, onChange }) {
 
 export default function StylePanel({ draft, editor }) {
   const { setField, apply } = editor
-  const accent = draft.couleurAccent || DEFAULT_ACCENT
-  const background = draft.couleurFond || DEFAULT_BACKGROUND
+  const { accent, background } = effectiveColors(draft.themeId, draft)
   const shape = draft.formePhoto || 'round'
+  const customized = !!(draft.couleurAccent || draft.couleurFond)
 
   const resetColors = () =>
     apply((d) =>
-      d.couleurAccent === DEFAULT_ACCENT && d.couleurFond === DEFAULT_BACKGROUND
-        ? d
-        : { ...d, couleurAccent: DEFAULT_ACCENT, couleurFond: DEFAULT_BACKGROUND }
+      !d.couleurAccent && !d.couleurFond ? d : { ...d, couleurAccent: '', couleurFond: '' }
     )
 
   return (
@@ -105,18 +109,16 @@ export default function StylePanel({ draft, editor }) {
       </div>
 
       <div style={title}>Couleurs</div>
+      <p className="small muted" style={{ marginTop: 0 }}>
+        {customized ? 'Couleurs personnalisées.' : 'Couleurs du modèle. Choisis les tiennes ci-dessous.'}
+      </p>
       <ColorRow
         id="style-accent"
         label="Couleur d'accentuation"
         value={accent}
         onChange={(v) => setField('couleurAccent', v)}
       />
-      <Swatches
-        colors={ACCENTS}
-        value={accent}
-        label="Accentuation"
-        onPick={(c) => setField('couleurAccent', c)}
-      />
+      <Swatches colors={ACCENTS} value={accent} label="Accentuation" onPick={(c) => setField('couleurAccent', c)} />
 
       <div style={{ height: 14 }} />
       <ColorRow
@@ -125,15 +127,10 @@ export default function StylePanel({ draft, editor }) {
         value={background}
         onChange={(v) => setField('couleurFond', v)}
       />
-      <Swatches
-        colors={BACKGROUNDS}
-        value={background}
-        label="Fond"
-        onPick={(c) => setField('couleurFond', c)}
-      />
+      <Swatches colors={BACKGROUNDS} value={background} label="Fond" onPick={(c) => setField('couleurFond', c)} />
 
-      <button type="button" className="btn btn-sm" style={{ marginTop: 14 }} onClick={resetColors}>
-        Réinitialiser les couleurs
+      <button type="button" className="btn btn-sm" style={{ marginTop: 14 }} onClick={resetColors} disabled={!customized}>
+        Revenir aux couleurs du modèle
       </button>
 
       <div style={title}>Forme de la photo</div>

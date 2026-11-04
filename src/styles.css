@@ -358,3 +358,65 @@ a:hover,a:focus-visible{text-decoration:underline}
  .theme-suisse{padding:35px 7%}
  .theme-suisse .suisse-body{grid-template-columns:1fr}
 }
+
+/* ===== COULEURS DES THÈMES (fond, accentuation) ===== */
+.portfolio-render{background:var(--tb);color:var(--ink)}
+.portfolio-render a{color:var(--link)}
+.portfolio-render .p-photo,.portfolio-render .p-project-image{background:var(--line)}
+.portfolio-render .p-section h2{color:var(--ta-text)}
+.portfolio-render .p-skill{border-color:var(--ta)}
+
+.portfolio-render.theme-une{background:var(--tb);color:var(--ink)}
+.portfolio-render.theme-une .une-top{border-bottom-color:var(--ink)}
+.portfolio-render.theme-une .une-columns{border-top-color:var(--ink)}
+.portfolio-render.theme-une .une-monogram{width:210px;height:260px;border-radius:110px 110px 8px 8px;background:var(--ta);color:var(--on-accent);display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:72px}
+@media(max-width:760px){.portfolio-render.theme-une .une-monogram{width:150px;height:180px;font-size:52px}}
+
+.portfolio-render.theme-ardoise{background:var(--tb)}
+.portfolio-render.theme-ardoise .ardoise-side{background:var(--ta);color:var(--on-accent)}
+.portfolio-render.theme-ardoise .ardoise-side a{color:inherit}
+.portfolio-render.theme-ardoise .ardoise-side .p-section h2{color:var(--on-accent);opacity:.85}
+.portfolio-render.theme-ardoise .ardoise-main .p-section h2{color:var(--ink);border-bottom:2px solid var(--ta)}
+
+.portfolio-render.theme-frise{background:var(--tb)}
+.portfolio-render.theme-frise .frise-head{border-bottom-color:var(--line)}
+.portfolio-render.theme-frise .frise-body>.timeline-item:before{border-color:var(--tb)}
+.portfolio-render.theme-frise .frise-body .p-section{border-left-color:var(--ta)}
+
+.portfolio-render.theme-affiche{background:var(--tb);color:var(--ink)}
+.portfolio-render.theme-affiche .p-section{border-top-color:var(--line)}
+.portfolio-render.theme-affiche .p-photo{border-color:var(--ink)}
+.portfolio-render.theme-affiche a{color:inherit;text-decoration:underline}
+
+.portfolio-render.theme-bento{background:var(--tb)}
+.portfolio-render.theme-bento .bento-head{background:var(--ta);color:var(--on-accent)}
+.portfolio-render.theme-bento .bento-head a{color:inherit}
+.portfolio-render.theme-bento .p-section{background:var(--paper)}
+.portfolio-render.theme-bento .p-section>.p-section{background:none;padding:0;border-radius:0}
+
+.portfolio-render.theme-carnet{background-color:var(--tb);background-image:repeating-linear-gradient(transparent,transparent 29px,var(--line) 30px)}
+.portfolio-render.theme-carnet .carnet-head{border-bottom-color:var(--ta)}
+.portfolio-render.theme-carnet .p-section{background:var(--paper);border-color:var(--line);box-shadow:3px 4px 0 var(--line)}
+
+.portfolio-render.theme-terminal{background:var(--tb);color:var(--ink)}
+.portfolio-render.theme-terminal .terminal-bar{color:var(--ink);opacity:.7;border-bottom-color:var(--line)}
+.portfolio-render.theme-terminal .p-name{color:var(--ta-text)}
+.portfolio-render.theme-terminal .p-section h2{color:var(--ink)}
+.portfolio-render.theme-terminal .p-section:before{color:var(--ta)}
+
+.portfolio-render.theme-pop{background:var(--tb);color:var(--ink)}
+.portfolio-render.theme-pop .pop-head{background:var(--ta);color:var(--on-accent);border-color:var(--ink);box-shadow:7px 7px 0 var(--ink)}
+.portfolio-render.theme-pop .pop-head a{color:inherit}
+.portfolio-render.theme-pop .p-section{background:var(--paper);border-color:var(--ink);box-shadow:5px 5px 0 var(--ink)}
+.portfolio-render.theme-pop .p-section h2{color:var(--ink)}
+.portfolio-render.theme-pop .p-section>.p-section{background:none;border:0;box-shadow:none}
+
+.portfolio-render.theme-suisse{background:var(--tb);color:var(--ink)}
+.portfolio-render.theme-suisse .suisse-head{border-bottom-color:var(--ink)}
+.portfolio-render.theme-suisse .p-section{border-top-color:var(--ink)}
+.portfolio-render.theme-suisse .p-section h2{color:var(--ink)}
+.portfolio-render.theme-suisse .p-section h2:before{color:var(--ta-text)}
+
+.portfolio-render.theme-galerie{background:var(--tb);color:var(--ink)}
+.portfolio-render.theme-galerie .galerie-head,.portfolio-render.theme-galerie .p-section{border-bottom-color:var(--line)}
+.portfolio-render.theme-galerie .p-contact{color:inherit}

@@ -1,4 +1,5 @@
 import { esc, safeImage } from './utils'
+import { themeStyle } from './colors'
 import {
   visibleSections,
   sectionTitle,
@@ -8,11 +9,8 @@ import {
   renderSections,
 } from './sections'
 
-const vars = (p) =>
-  `--theme-accent:${esc(p.couleurAccent || '#6478df')};--theme-background:${esc(p.couleurFond || '#ffffff')};`
-
 const wrap = (name, p, inner) =>
-  `<div class="portfolio-render theme-${name}" style="${vars(p)}">${inner}</div>`
+  `<div class="portfolio-render theme-${name}" style="${themeStyle(name, p)}">${inner}</div>`
 
 const withoutIdentity = (p) => visibleSections(p).filter((id) => id !== 'identity')
 const content = (p) => visibleSections(p).filter((id) => id !== 'identity' && id !== 'contacts')

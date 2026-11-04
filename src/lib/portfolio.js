@@ -44,14 +44,15 @@ export function slugify(s) {
 export const formatDate = (d) => (d ? new Date(d).toLocaleDateString('fr-FR') : '')
 
 // Un portfolio VIDE. Les clés accentuées sont celles attendues par db.js.
+// couleurAccent / couleurFond vides = couleurs propres au thème.
 export function createPortfolio(themeId, langue = 'fr') {
   return {
     id: uid(),
     titre: '',
     langue,
     themeId,
-    couleurAccent: '#6478df',
-    couleurFond: '#ffffff',
+    couleurAccent: '',
+    couleurFond: '',
     formePhoto: 'round',
     ordreSections: SECTION_DEFS.map((s) => s.id),
     sectionsMasquées: [],

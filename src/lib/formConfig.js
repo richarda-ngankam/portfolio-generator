@@ -3,6 +3,17 @@ export const SECTIONS = {
   identity: {
     label: 'Identité',
     fields: [
+      { key: 'photo', label: 'Photo de profil', type: 'image', kind: 'photo' },
+      {
+        key: 'formePhoto',
+        label: 'Forme de la photo',
+        type: 'select',
+        options: [
+          ['round', 'Rond'],
+          ['square', 'Carré'],
+          ['rounded', 'Arrondi'],
+        ],
+      },
       { key: 'name', label: 'Nom complet', max: 100 },
       { key: 'profession', label: 'Profession', max: 120 },
       { key: 'tagline', label: 'Accroche', max: 180 },
@@ -52,6 +63,7 @@ export const LISTS = {
     add: 'Ajouter une expérience',
     current: 'En cours / Poste actuel',
     fields: [
+      { key: 'logo', label: "Logo de l'entreprise", type: 'image', kind: 'logo' },
       { key: 'position', label: 'Poste', max: 250 },
       { key: 'company', label: 'Entreprise', max: 250 },
       { key: 'startDate', label: 'Début', type: 'month' },
@@ -64,6 +76,7 @@ export const LISTS = {
     add: 'Ajouter une formation',
     current: 'En cours',
     fields: [
+      { key: 'logo', label: "Logo de l'établissement", type: 'image', kind: 'logo' },
       { key: 'degree', label: 'Diplôme / Formation', max: 250 },
       { key: 'school', label: 'Établissement', max: 250 },
       { key: 'startDate', label: 'Début', type: 'month' },
@@ -101,6 +114,7 @@ export const LISTS = {
     label: 'Projet',
     add: 'Ajouter un projet',
     fields: [
+      { key: 'image', label: 'Image du projet', type: 'image', kind: 'project' },
       { key: 'title', label: 'Titre', max: 250 },
       { key: 'description', label: 'Description', type: 'textarea', max: 1500 },
       { key: 'link', label: 'Lien', type: 'url', max: 250 },

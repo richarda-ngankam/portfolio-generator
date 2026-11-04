@@ -1,5 +1,24 @@
-export default function Field({ id, label, type = 'text', value, onChange, max, error }) {
+import ImageField from './ImageField'
+
+export default function Field({ id, label, type = 'text', value, onChange, max, error, kind, options, shape }) {
   const v = value ?? ''
+
+  if (type === 'image') {
+    return <ImageField id={id} label={label} kind={kind} value={v} onChange={onChange} shape={shape} />
+  }
+
+  if (type === 'select') {
+    return (
+      <div className="field">
+        <label htmlFor={id}>{label}</label>
+        <select id={id} value={String(v)} onChange={(e) => onChange(e.target.value)}>
+          {(options || []).map(([val, text]) => (
+            <option key={val} value={val}>{text}</option>
+          ))}
+        </select>
+      </div>
+    )
+  }
 
   if (type === 'textarea') {
     return (
