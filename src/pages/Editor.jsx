@@ -8,6 +8,7 @@ import { completion, hasContent } from '../lib/portfolioStats'
 import { stashDraft } from '../lib/pendingDraft'
 import ContentPanel from '../components/editor/ContentPanel'
 import StylePanel from '../components/editor/StylePanel'
+import PublishPanel from '../components/editor/PublishPanel'
 import Preview from '../components/editor/Preview'
 import ExitDialog from '../components/ExitDialog'
 
@@ -81,10 +82,19 @@ export default function Editor() {
       saveAsGuest('stay')
       return
     }
-    const saved = await persist()
-    if (saved && id === 'new') {
-      loadedFor.current = saved.id // évite de recharger le portfolio qu'on vient d'enregistrer
-      navigate(`/editor/${saved.id}`, { replace: true })
+    const result = await persist()
+    if (result && id === 'new') {
+      loadedFor.current = result.id // évite de recharger le portfolio qu'on vient d'enregistrer
+      navigate(`/editor/${result.id}`, { replace: true })
+    }
+  }
+
+  // Appelé par l'onglet Publication après un enregistrement réussi
+  function afterPublishSave(result) {
+    origStatus.current = result.statut
+    if (id === 'new') {
+      loadedFor.current = result.id
+      navigate(`/editor/${result.id}`, { replace: true })
     }
   }
 
@@ -105,8 +115,8 @@ export default function Editor() {
       saveAsGuest('exit')
       return
     }
-    const saved = await persist()
-    if (saved) {
+    const result = await persist()
+    if (result) {
       const to = exitDialog.to
       setExitDialog(null)
       navigate(to)
@@ -206,7 +216,7 @@ export default function Editor() {
   }
 
   const theme = THEMES.find((t) => t.id === draft.themeId)
-  const saved = id !== 'new' && !dirty
+  const isSaved = id !== 'new' && !dirty
   const percent = completion(draft)
   const canSave = !saving && hasContent(draft) && (id === 'new' || dirty)
 
@@ -228,14 +238,14 @@ export default function Editor() {
           )}
           <span className="pill">
             <span className="dot" />
-            {saving ? 'Enregistrement…' : saved ? 'Enregistré' : 'Brouillon'}
+            {saving ? 'Enregistrement…' : isSaved ? 'Enregistré' : 'Brouillon'}
           </span>
           <button className="btn btn-sm optional" onClick={undo} disabled={!canUndo} title="Annuler (Ctrl+Z)">↶</button>
           <button className="btn btn-sm optional" onClick={redo} disabled={!canRedo} title="Rétablir (Ctrl+Y)">↷</button>
           <button className="btn btn-sm" onClick={saveNow} disabled={!canSave} title="Enregistrer (Ctrl+S)">
             Enregistrer
           </button>
-          <button className="btn btn-primary btn-sm" disabled title="Disponible au Bloc 5">Exporter ↗</button>
+          <button className="btn btn-primary btn-sm" disabled title="Disponible à l'étape 5.2">Exporter ↗</button>
         </div>
       </div>
 
@@ -261,7 +271,15 @@ export default function Editor() {
 
           {tab === 'content' && <ContentPanel draft={draft} editor={editor} />}
           {tab === 'style' && <StylePanel draft={draft} editor={editor} />}
-          {tab === 'publish' && <p className="section-description">Publication : Bloc 5.</p>}
+          {tab === 'publish' && (
+            <PublishPanel
+              draft={draft}
+              editor={editor}
+              user={user}
+              requireLogin={() => saveAsGuest('stay')}
+              onSaved={afterPublishSave}
+            />
+          )}
         </aside>
 
         <Preview draft={draft} />
