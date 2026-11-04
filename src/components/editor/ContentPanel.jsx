@@ -120,7 +120,10 @@ export default function ContentPanel({ draft, editor }) {
                     label={f.label}
                     type={f.type}
                     max={f.max}
-                    value={draft[f.key]}
+                    kind={f.kind}
+                    options={f.options}
+                    shape={draft.formePhoto}
+                    value={draft[f.key] ?? (f.key === 'formePhoto' ? 'round' : '')}
                     onChange={(v) => setField(f.key, v)}
                   />
                 ))}

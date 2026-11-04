@@ -51,6 +51,7 @@ export default function ItemList({ listKey, items = [], editor }) {
                   label={f.label}
                   type={f.type}
                   max={f.max}
+                  kind={f.kind}
                   value={item[f.key]}
                   onChange={(v) => setItem(listKey, i, f.key, v)}
                   error={

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { loadImage, cropToDataURL } from '../../lib/images'
 
 const PRESETS = {
@@ -74,7 +75,8 @@ export default function CropDialog({ src, kind, shape, onCancel, onApply }) {
 
   const radius = kind === 'photo' ? RADIUS[shape] || RADIUS.round : '12px'
 
-  return (
+  // Affichée dans <body> : sinon la colonne de gauche la place derrière l'aperçu
+  return createPortal(
     <div
       className="modal-backdrop"
       onClick={(e) => {
@@ -163,6 +165,7 @@ export default function CropDialog({ src, kind, shape, onCancel, onApply }) {
           <button className="btn btn-primary" onClick={apply} disabled={!img}>Appliquer</button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   )
 }
