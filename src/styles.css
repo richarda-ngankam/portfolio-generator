@@ -133,11 +133,11 @@ hr{border:0;border-top:1px solid var(--line);margin:22px 0}
 /* =========================================================
    06. EDITEUR
 ========================================================= */
-.editor-page{padding-top:68px}
-.editor-top{position:sticky;top:68px;z-index:30;background:var(--surface);border-bottom:1px solid var(--line);padding:11px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.editor-page{padding-top:0}
+.editor-top{position:sticky;top:0;z-index:30;background:var(--surface);border-bottom:1px solid var(--line);padding:11px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px}
 .editor-top-left,.editor-top-right{display:flex;align-items:center;gap:10px}
-.editor-layout{display:grid;grid-template-columns:minmax(320px,430px) minmax(0,1fr);min-height:calc(100vh - 120px)}
-.editor-sidebar{border-right:1px solid var(--line);background:var(--surface);padding:20px;overflow:auto;max-height:calc(100vh - 120px);position:sticky;top:120px}
+.editor-layout{display:grid;grid-template-columns:minmax(320px,430px) minmax(0,1fr);min-height:calc(100vh - 56px)}
+.editor-sidebar{border-right:1px solid var(--line);background:var(--surface);padding:20px;overflow:auto;max-height:calc(100vh - 56px);position:sticky;top:56px}
 .editor-main{padding:25px;background:var(--bg);min-width:0}
 .progress-wrap{margin:18px 0 25px}
 .progress-label{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:7px}
