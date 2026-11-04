@@ -5,6 +5,7 @@ import { useAuth } from '../context/AuthContext'
 import { useEditorState } from '../hooks/useEditorState'
 import { THEMES, createPortfolio } from '../lib/portfolio'
 import { completion, hasContent } from '../lib/portfolioStats'
+import ContentPanel from '../components/editor/ContentPanel'
 
 const TABS = [
   { id: 'content', label: 'Contenu' },
@@ -19,7 +20,8 @@ export default function Editor() {
   const location = useLocation()
   const { user, loading: authLoading } = useAuth()
 
-  const { draft, dirty, load, setField, undo, redo, canUndo, canRedo } = useEditorState()
+  const editor = useEditorState()
+  const { draft, dirty, load, undo, redo, canUndo, canRedo } = editor
   const [tab, setTab] = useState('content')
   const [problem, setProblem] = useState('')
   const loadedFor = useRef(null)
@@ -141,22 +143,7 @@ export default function Editor() {
             ))}
           </div>
 
-          {tab === 'content' && (
-            <section className="editor-section">
-              <div className="editor-section-head"><strong>Identité (provisoire)</strong></div>
-              <div className="editor-section-body">
-                <div className="field">
-                  <label htmlFor="f-name">Nom</label>
-                  <input id="f-name" value={draft.name} onChange={(e) => setField('name', e.target.value)} />
-                </div>
-                <div className="field">
-                  <label htmlFor="f-profession">Profession</label>
-                  <input id="f-profession" value={draft.profession} onChange={(e) => setField('profession', e.target.value)} />
-                </div>
-                <p className="section-description">Le formulaire complet par sections arrive à l'étape 3.3.</p>
-              </div>
-            </section>
-          )}
+          {tab === 'content' && <ContentPanel draft={draft} editor={editor} />}
           {tab === 'style' && <p className="section-description">Thème, couleurs et forme de la photo : étape 3.6.</p>}
           {tab === 'publish' && <p className="section-description">Publication : Bloc 5.</p>}
         </aside>
